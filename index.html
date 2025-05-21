@@ -2,149 +2,295 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Willkommen – Oliverwebdev</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oliverwebdev | Futuristisches Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
     :root {
-      --bg-dark: #181c23;
-      --accent: #76e2ff;
-      --text-main: #e1e5ee;
-      --text-soft: #6c7a93;
-      --shadow: 0 8px 24px rgba(0,0,0,0.2);
-      --radius: 16px;
+      --bg: #10131a;
+      --panel: #191e2b;
+      --neon1: #00fff7;
+      --neon2: #ff26b9;
+      --neon3: #47ff55;
+      --text: #e7e9ee;
+      --accent: #00f7ff;
+      --shadow: 0 0 32px var(--neon1), 0 0 12px var(--neon2), 0 0 2px #fff;
+      --radius: 18px;
+      --glow: 0 0 20px var(--neon2), 0 0 40px var(--neon1);
     }
     html, body {
-      background: var(--bg-dark);
-      color: var(--text-main);
-      font-family: 'Roboto', Arial, sans-serif;
       margin: 0;
       padding: 0;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      background: var(--bg);
+      font-family: 'JetBrains Mono', 'Orbitron', Arial, monospace;
+      color: var(--text);
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: repeating-linear-gradient(120deg, rgba(0,255,255,0.02) 0 2px, transparent 2px 40px), linear-gradient(90deg,rgba(0,255,255,0.04) 1px,transparent 1px), linear-gradient(180deg,rgba(255,38,185,0.06) 1px,transparent 1px);
+      z-index: 0;
+      pointer-events: none;
     }
     .container {
-      max-width: 600px;
-      margin: 60px auto 0 auto;
-      padding: 2.5rem 2rem 2.5rem 2rem;
-      background: rgba(28, 32, 40, 0.96);
+      margin: 0 auto;
+      max-width: 730px;
+      padding: 3.5rem 1.2rem 2.2rem 1.2rem;
+      background: linear-gradient(120deg, rgba(25,30,43,0.95) 80%, rgba(0,255,247,0.07));
       border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      text-align: center;
+      box-shadow: 0 0 80px #00fff740, 0 2px 44px #ff26b933;
       position: relative;
-    }
-    header {
-      margin-bottom: 2.5rem;
-    }
-    h1 {
-      font-size: 2.6rem;
-      margin: 0 0 0.2em 0;
-      color: var(--accent);
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-shadow: 0 2px 16px #1c2028;
-    }
-    h2 {
-      font-size: 1.4rem;
-      font-weight: 400;
-      color: var(--text-soft);
-      margin-bottom: 1.8em;
-      margin-top: 0;
-      letter-spacing: 1px;
-    }
-    .wave {
-      font-size: 2.4rem;
-      margin-right: 0.2em;
-      display: inline-block;
-      animation: wave 1.8s infinite;
-      transform-origin: 70% 70%;
-    }
-    @keyframes wave {
-      0% { transform: rotate(0deg);}
-      10% { transform: rotate(16deg);}
-      20% { transform: rotate(-9deg);}
-      30% { transform: rotate(12deg);}
-      40% { transform: rotate(-5deg);}
-      50% { transform: rotate(7deg);}
-      60% { transform: rotate(0deg);}
-      100% { transform: rotate(0deg);}
-    }
-    nav {
-      margin: 2.5rem 0 1.5rem 0;
-    }
-    nav a {
-      display: inline-block;
-      margin: 0 0.8em;
-      padding: 0.7em 1.4em;
-      border-radius: 25px;
-      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-      color: var(--accent);
-      background: transparent;
-      font-weight: 500;
-      text-decoration: none;
-      border: 2px solid var(--accent);
-      box-shadow: none;
-    }
-    nav a:hover, nav a:focus {
-      background: var(--accent);
-      color: #181c23;
-      box-shadow: 0 2px 16px #76e2ff55;
-    }
-    .intro {
-      font-size: 1.14rem;
-      color: var(--text-main);
-      margin-bottom: 2em;
-      line-height: 1.7;
+      z-index: 2;
+      text-align: center;
+      margin-top: 6vh;
     }
     .avatar {
-      width: 92px;
-      height: 92px;
+      margin: 0 auto 1.5rem auto;
+      width: 110px; height: 110px;
       border-radius: 50%;
-      margin: 0 auto 1.2rem auto;
-      border: 3px solid var(--accent);
-      background: #181c23;
-      box-shadow: 0 4px 16px #76e2ff33;
+      border: 3.5px solid var(--neon1);
+      box-shadow: 0 0 44px var(--neon2), 0 2px 12px var(--neon1);
       object-fit: cover;
-      display: block;
+      transition: transform .3s cubic-bezier(.55,1.7,.41,.88), box-shadow .3s;
+      background: #161922;
+      position: relative;
+      animation: pulseAvatar 3s infinite;
+    }
+    @keyframes pulseAvatar {
+      0%, 100% {box-shadow: 0 0 44px var(--neon2), 0 2px 12px var(--neon1);}
+      60% {box-shadow: 0 0 64px var(--neon1), 0 4px 24px var(--neon2);}
+    }
+    .headline {
+      font-family: 'Orbitron', 'JetBrains Mono', Arial, monospace;
+      font-size: 2.9rem;
+      color: var(--neon1);
+      letter-spacing: 2.5px;
+      margin-bottom: 0.2em;
+      filter: drop-shadow(0 0 16px var(--neon2));
+      position: relative;
+      animation: glitch 1.8s infinite linear alternate;
+    }
+    @keyframes glitch {
+      0%, 100% {text-shadow: 2px 0 var(--neon2), -2px 0 var(--neon1);}
+      10% {text-shadow: -2px 2px var(--neon1), 1px -2px var(--neon2);}
+      20% {text-shadow: 2px -2px var(--neon2), -1px 2px var(--neon1);}
+      30% {text-shadow: -1px 1px var(--neon1), 1px -1px var(--neon2);}
+      50% {text-shadow: 0 0 22px var(--neon2);}
+      70% {text-shadow: 0 0 6px var(--neon1);}
+      80% {text-shadow: 1px 0px var(--neon2);}
+    }
+    .subtitle {
+      color: var(--text);
+      font-size: 1.25rem;
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 2.2rem;
+      opacity: .96;
+      text-shadow: 0 2px 10px #47ff5570;
+    }
+    .stats-panel {
+      display: flex;
+      justify-content: space-around;
+      gap: 2rem;
+      margin: 2.5rem 0 2.8rem 0;
+      padding: 1.6rem 0.5rem 1.3rem 0.5rem;
+      background: rgba(22,28,35,0.98);
+      border-radius: 18px;
+      box-shadow: 0 0 30px var(--neon2), 0 1px 14px var(--neon1);
+      border: 1.5px solid var(--neon2);
+      position: relative;
+    }
+    .stat {
+      text-align: center;
+      flex: 1;
+      padding: 0 0.7rem;
+    }
+    .stat-value {
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: var(--neon1);
+      text-shadow: 0 0 18px var(--neon2), 0 2px 10px #fff3;
+      letter-spacing: 1px;
+      animation: countUp 2.3s cubic-bezier(.22,1.28,.68,.88);
+    }
+    @keyframes countUp {
+      from {filter: blur(7px) opacity(0.4);}
+      to {filter: blur(0) opacity(1);}
+    }
+    .stat-label {
+      margin-top: 0.2em;
+      font-size: 1rem;
+      color: var(--neon3);
+      opacity: 0.78;
+      letter-spacing: 1px;
+      text-shadow: 0 1px 4px var(--neon1);
+    }
+    .big-btn {
+      margin: 3.6rem 0 2.2rem 0;
+      display: inline-block;
+      font-family: 'Orbitron', monospace;
+      font-size: 1.17rem;
+      font-weight: 700;
+      padding: 1.12em 2.6em;
+      border-radius: 44px;
+      background: linear-gradient(92deg, var(--neon2) 0%, var(--neon1) 100%);
+      color: #161922;
+      text-shadow: 0 0 14px var(--neon1);
+      border: none;
+      box-shadow: 0 0 24px var(--neon2), 0 0 10px var(--neon1);
+      cursor: pointer;
+      letter-spacing: 2px;
+      transition: background .2s, color .2s, box-shadow .2s, transform .15s;
+      outline: none;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .big-btn:hover {
+      background: linear-gradient(100deg, var(--neon1) 0%, var(--neon2) 100%);
+      color: #fff;
+      box-shadow: 0 0 40px var(--neon2), 0 0 30px var(--neon1);
+      transform: scale(1.06) rotate(-2deg);
+    }
+    .links-row {
+      display: flex;
+      justify-content: center;
+      gap: 2.1rem;
+      margin-bottom: 1.5rem;
+      margin-top: 1.2rem;
+    }
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: var(--neon1);
+      background: #14181f;
+      border-radius: 50%;
+      border: 2px solid var(--neon2);
+      box-shadow: 0 0 8px var(--neon1), 0 0 4px var(--neon2);
+      width: 54px;
+      height: 54px;
+      margin: 0 0.1rem;
+      transition: background .18s, color .15s, box-shadow .21s, transform .15s;
+      text-decoration: none;
+    }
+    .social-link:hover, .social-link:focus {
+      color: #fff;
+      background: var(--neon1);
+      box-shadow: 0 0 28px var(--neon2), 0 0 16px var(--neon1);
+      transform: scale(1.13) rotate(8deg);
+    }
+    .desc {
+      font-size: 1.07rem;
+      color: #b0cdf5;
+      line-height: 1.72;
+      margin-bottom: 2.2rem;
+      text-shadow: 0 2px 10px var(--neon1)33;
     }
     footer {
-      text-align: center;
-      color: var(--text-soft);
-      font-size: 0.96rem;
-      margin: 3em 0 1.5em 0;
-      letter-spacing: 0.5px;
-      opacity: 0.85;
+      margin: 2.2rem 0 1.5rem 0;
+      color: #5f7a8a;
+      opacity: 0.65;
+      font-size: 1.01rem;
+      letter-spacing: 1.1px;
+      text-shadow: 0 2px 8px #00fff752;
     }
-    @media (max-width: 700px) {
-      .container { max-width: 97vw; padding: 1.5rem 0.5rem;}
-      h1 { font-size: 2rem; }
-      .avatar { width: 70px; height: 70px;}
+    @media (max-width: 900px) {
+      .container {margin-top: 1.8rem;}
+    }
+    @media (max-width: 630px) {
+      .container {max-width: 97vw; padding: 1rem;}
+      .stats-panel {flex-direction: column; gap: 1.4rem;}
+      .links-row {gap: 1.2rem;}
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <header>
-      <span class="wave">👋</span>
-      <h1>Hi, ich bin Oliver</h1>
-      <h2>Webentwickler, Tüftler, Digital Creator</h2>
-      <img src="Profilbild.jpeg" alt="Oliver Profilbild" class="avatar" loading="lazy" />
-    </header>
-    <p class="intro">
-      Willkommen auf meiner persönlichen Webseite! <br>
-      Hier findest du Projekte, Tools & Artikel rund um Webentwicklung, Open Source & kreative digitale Ideen.
-      <br><br>
-      <strong>Code. Design. Inspiration.</strong>
-    </p>
-    <nav>
-      <a href="https://github.com/Oliverwebdev?tab=repositories">Projekte</a>
-      <a href="https://portfolio-sp-oliver.onrender.com">Website</a>
-      <a href="https://github.com/Oliverwebdev" target="_blank" rel="noopener">GitHub</a>
-    </nav>
+    <img src="Profilbild.jpeg" alt="Avatar Oliverwebdev" class="avatar" />
+    <div class="headline">oliverwebdev<span style="color:var(--neon2)">.github.io</span></div>
+    <div class="subtitle">Welcome to the <span style="color:var(--neon3)">Future</span> of Coding</div>
+    <div class="desc">
+      <b>Webdeveloper. Tüftler. Digital Creator.</b>  
+      <br>Hier findest du meine Projekte, Spielwiesen und Tools rund um Webentwicklung, Open Source & digitale Experimente.<br>
+      <span style="color:var(--neon2); font-size:1.13em;"><strong>Code, Kreativität und Vision – alles an einem Ort.</strong></span>
+    </div>
+
+    <!-- STATS-PANEL -->
+    <div class="stats-panel">
+      <div class="stat">
+        <div class="stat-value" id="repos">–</div>
+        <div class="stat-label">Projekte</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="followers">–</div>
+        <div class="stat-label">Followers</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="years">–</div>
+        <div class="stat-label">Jahre aktiv</div>
+      </div>
+    </div>
+
+    <button class="big-btn" onclick="window.open('https://github.com/Oliverwebdev?tab=repositories','_blank')">
+      🚀 Zu meinen Projekten
+    </button>
+
+    <div class="links-row">
+      <a href="https://github.com/Oliverwebdev" class="social-link" target="_blank" aria-label="GitHub">
+        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+      </a>
+      <a href="https://portfolio-sp-oliver.onrender.com" class="social-link" target="_blank" aria-label="Portfolio">
+        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10c0 2.67-.59 5.13-1.64 7.37"></path></svg>
+      </a>
+      <a href="mailto:kontakt@oliverwebdev.de" class="social-link" aria-label="Email">
+        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"/><polyline points="22,6 12,13 2,6"/></svg>
+      </a>
+    </div>
   </div>
   <footer>
-    &copy; 2025 Oliverwebdev &mdash; Made with <span style="color:var(--accent);">❤</span> in Germany
+    &copy; 2025 Oliverwebdev | <span style="color:var(--neon1)">stay creative</span>
   </footer>
+  <script>
+    // GITHUB USERNAME
+    const username = "Oliverwebdev";
+    // Hol dir die Daten vom öffentlichen GitHub-Profil
+    fetch(`https://api.github.com/users/${username}`)
+      .then(res => res.json())
+      .then(data => {
+        // Repos
+        animateValue("repos", 0, data.public_repos, 1200);
+        // Followers
+        animateValue("followers", 0, data.followers, 1200);
+        // Jahre aktiv (aktuelles Jahr - Account creation)
+        const years = new Date().getFullYear() - new Date(data.created_at).getFullYear();
+        animateValue("years", 0, years, 1200);
+      })
+      .catch(err => {
+        document.getElementById("repos").textContent = "?";
+        document.getElementById("followers").textContent = "?";
+        document.getElementById("years").textContent = "?";
+      });
+
+    // Die countUp Funktion
+    function animateValue(id, start, end, duration) {
+      const obj = document.getElementById(id);
+      let startTimestamp = null;
+      const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        obj.textContent = Math.floor(progress * (end - start) + start);
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        } else {
+          obj.textContent = end;
+        }
+      };
+      window.requestAnimationFrame(step);
+    }
+  </script>
 </body>
 </html>
