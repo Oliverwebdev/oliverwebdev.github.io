@@ -26,6 +26,8 @@
       font-family: 'JetBrains Mono', 'Orbitron', Arial, monospace;
       color: var(--text);
       overflow-x: hidden;
+      font-size: 16px;
+      -webkit-tap-highlight-color: transparent;
     }
     body::before {
       content: "";
@@ -38,6 +40,7 @@
     .container {
       margin: 0 auto;
       max-width: 730px;
+      width: 100%;
       padding: 3.5rem 1.2rem 2.2rem 1.2rem;
       background: linear-gradient(120deg, rgba(25,30,43,0.95) 80%, rgba(0,255,247,0.07));
       border-radius: var(--radius);
@@ -46,10 +49,12 @@
       z-index: 2;
       text-align: center;
       margin-top: 6vh;
+      transition: max-width .2s, padding .2s;
     }
     .avatar {
-      margin: 0 auto 1.5rem auto;
-      width: 110px; height: 110px;
+      margin: 0 auto 1.2rem auto;
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
       border: 3.5px solid var(--neon1);
       box-shadow: 0 0 44px var(--neon2), 0 2px 12px var(--neon1);
@@ -58,6 +63,7 @@
       background: #161922;
       position: relative;
       animation: pulseAvatar 3s infinite;
+      aspect-ratio: 1 / 1;
     }
     @keyframes pulseAvatar {
       0%, 100% {box-shadow: 0 0 44px var(--neon2), 0 2px 12px var(--neon1);}
@@ -65,13 +71,15 @@
     }
     .headline {
       font-family: 'Orbitron', 'JetBrains Mono', Arial, monospace;
-      font-size: 2.9rem;
+      font-size: clamp(2rem, 7vw, 2.9rem);
       color: var(--neon1);
       letter-spacing: 2.5px;
       margin-bottom: 0.2em;
       filter: drop-shadow(0 0 16px var(--neon2));
       position: relative;
       animation: glitch 1.8s infinite linear alternate;
+      line-height: 1.1;
+      word-break: break-word;
     }
     @keyframes glitch {
       0%, 100% {text-shadow: 2px 0 var(--neon2), -2px 0 var(--neon1);}
@@ -84,14 +92,23 @@
     }
     .subtitle {
       color: var(--text);
-      font-size: 1.25rem;
+      font-size: clamp(1.05rem, 2.3vw, 1.35rem);
       font-family: 'JetBrains Mono', monospace;
       margin-bottom: 2.2rem;
       opacity: .96;
       text-shadow: 0 2px 10px #47ff5570;
     }
+    .desc {
+      font-size: clamp(0.99rem, 2vw, 1.07rem);
+      color: #b0cdf5;
+      line-height: 1.72;
+      margin-bottom: 2.2rem;
+      text-shadow: 0 2px 10px var(--neon1)33;
+      word-break: break-word;
+    }
     .stats-panel {
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-around;
       gap: 2rem;
       margin: 2.5rem 0 2.8rem 0;
@@ -101,14 +118,17 @@
       box-shadow: 0 0 30px var(--neon2), 0 1px 14px var(--neon1);
       border: 1.5px solid var(--neon2);
       position: relative;
+      transition: gap .2s, padding .2s;
     }
     .stat {
       text-align: center;
-      flex: 1;
+      flex: 1 1 110px;
+      min-width: 110px;
       padding: 0 0.7rem;
+      margin-bottom: 1rem;
     }
     .stat-value {
-      font-size: 2.25rem;
+      font-size: clamp(1.5rem, 5vw, 2.25rem);
       font-weight: 700;
       color: var(--neon1);
       text-shadow: 0 0 18px var(--neon2), 0 2px 10px #fff3;
@@ -128,12 +148,12 @@
       text-shadow: 0 1px 4px var(--neon1);
     }
     .big-btn {
-      margin: 3.6rem 0 2.2rem 0;
+      margin: 2.5rem 0 2rem 0;
       display: inline-block;
       font-family: 'Orbitron', monospace;
-      font-size: 1.17rem;
+      font-size: clamp(1rem, 2.5vw, 1.19rem);
       font-weight: 700;
-      padding: 1.12em 2.6em;
+      padding: 1.1em 2.6em;
       border-radius: 44px;
       background: linear-gradient(92deg, var(--neon2) 0%, var(--neon1) 100%);
       color: #161922;
@@ -147,6 +167,11 @@
       position: relative;
       overflow: hidden;
       z-index: 1;
+      min-width: 190px;
+    }
+    .big-btn:focus {
+      outline: 3px solid var(--neon2);
+      outline-offset: 3px;
     }
     .big-btn:hover {
       background: linear-gradient(100deg, var(--neon1) 0%, var(--neon2) 100%);
@@ -156,10 +181,12 @@
     }
     .links-row {
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
       gap: 2.1rem;
       margin-bottom: 1.5rem;
       margin-top: 1.2rem;
+      width: 100%;
     }
     .social-link {
       display: inline-flex;
@@ -176,35 +203,73 @@
       margin: 0 0.1rem;
       transition: background .18s, color .15s, box-shadow .21s, transform .15s;
       text-decoration: none;
+      touch-action: manipulation;
     }
-    .social-link:hover, .social-link:focus {
+    .social-link:focus {
+      outline: 2.5px solid var(--neon3);
+      outline-offset: 1.5px;
+    }
+    .social-link:hover, .social-link:focus-visible {
       color: #fff;
       background: var(--neon1);
       box-shadow: 0 0 28px var(--neon2), 0 0 16px var(--neon1);
       transform: scale(1.13) rotate(8deg);
     }
-    .desc {
-      font-size: 1.07rem;
-      color: #b0cdf5;
-      line-height: 1.72;
-      margin-bottom: 2.2rem;
-      text-shadow: 0 2px 10px var(--neon1)33;
-    }
     footer {
       margin: 2.2rem 0 1.5rem 0;
       color: #5f7a8a;
       opacity: 0.65;
-      font-size: 1.01rem;
+      font-size: clamp(0.99rem, 2vw, 1.05rem);
       letter-spacing: 1.1px;
       text-shadow: 0 2px 8px #00fff752;
+      text-align: center;
     }
+
+    /* --- Media Queries for all breakpoints --- */
     @media (max-width: 900px) {
       .container {margin-top: 1.8rem;}
     }
     @media (max-width: 630px) {
-      .container {max-width: 97vw; padding: 1rem;}
-      .stats-panel {flex-direction: column; gap: 1.4rem;}
-      .links-row {gap: 1.2rem;}
+      .container {
+        max-width: 100vw;
+        padding: 0.7rem 0.2rem 1.2rem 0.2rem;
+        margin-top: 1.1rem;
+      }
+      .stats-panel {
+        flex-direction: column;
+        gap: 1.1rem;
+        padding: 1.0rem 0.4rem;
+      }
+      .stat {
+        margin-bottom: 0.6rem;
+      }
+      .links-row {
+        gap: 0.95rem;
+        margin-bottom: 1.1rem;
+      }
+      .big-btn {
+        padding: 0.85em 1.8em;
+        min-width: 0;
+      }
+    }
+    @media (max-width: 430px) {
+      .container {padding: 0.4rem 0.07rem;}
+      .avatar {width: 74px; height: 74px;}
+      .headline {font-size: 1.4rem;}
+      .stats-panel {padding: 0.7rem 0.2rem;}
+      .stat-label {font-size: 0.96rem;}
+      .big-btn {font-size: 0.96rem;}
+      footer {font-size: 0.97rem;}
+    }
+    @media (max-width: 360px) {
+      .avatar {width: 55px; height: 55px;}
+      .headline {font-size: 1.15rem;}
+    }
+    /* --- For really wide screens --- */
+    @media (min-width: 1200px) {
+      .container {max-width: 860px;}
+      .desc {font-size: 1.18rem;}
+      .stats-panel {gap: 2.8rem;}
     }
   </style>
 </head>
