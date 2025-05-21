@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 | Seite nicht gefunden</title>
+    <style>
+        :root {
+            --primary: #0ff;
+            --secondary: #f0f;
+            --dark: #111;
+            --light: #f5f5f5;
+            --error: #ff3860;
+            --accent: #3bff6f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.05;
+            z-index: 9;
+        }
+
+        .grid {
+            position: fixed;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: 
+                linear-gradient(rgba(0, 255, 255, 0.07) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.07) 1px, transparent 1px);
+            background-size: 40px 40px;
+            transform: perspective(500px) rotateX(60deg);
+            animation: grid-move 15s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes grid-move {
+            0% {
+                transform: perspective(500px) rotateX(60deg) translateY(0);
+            }
+            100% {
+                transform: perspective(500px) rotateX(60deg) translateY(40px);
+            }
+        }
+
+        .container {
+            text-align: center;
+            max-width: 900px;
+            width: 90%;
+            padding: 2rem;
+            z-index: 10;
+            position: relative;
+        }
+
+        .glitch-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .glitch {
+            font-size: clamp(5rem, 15vw, 15rem);
+            font-weight: 800;
+            position: relative;
+            color: var(--primary);
+            text-shadow: 
+                0 0 10px var(--primary),
+                0 0 20px var(--primary),
+                0 0 40px var(--primary);
+            animation: glitch 4s infinite;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: "404";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glitch::before {
+            color: var(--secondary);
+            z-index: -1;
+            animation: glitch-effect 3s infinite;
+        }
+
+        .glitch::after {
+            color: var(--error);
+            z-index: -2;
+            animation: glitch-effect 2s infinite reverse;
+        }
+
+        @keyframes glitch {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            7% {
+                transform: translateX(-2px);
+            }
+            10% {
+                transform: translateX(2px);
+            }
+            20% {
+                transform: translateX(-5px);
+            }
+            30% {
+                transform: translateX(5px);
+            }
+            40% {
+                transform: translateX(-2px);
+            }
+            50% {
+                transform: translateX(2px);
+            }
+            60% {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes glitch-effect {
+            0%, 100% {
+                clip-path: inset(50% 0 35% 0);
+                transform: translateX(-2px);
+            }
+            20% {
+                clip-path: inset(20% 0 60% 0);
+                transform: translateX(2px);
+            }
+            40% {
+                clip-path: inset(25% 0 25% 0);
+                transform: translateX(-2px);
+            }
+            60% {
+                clip-path: inset(75% 0 0 0);
+                transform: translateX(4px);
+            }
+            80% {
+                clip-path: inset(23% 0 67% 0);
+                transform: translateX(-4px);
+            }
+        }
+
+        .message {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            margin: 1rem 0 2rem;
+            text-shadow: 0 0 5px var(--light);
+            position: relative;
+            opacity: 0;
+            animation: fade-in 2s 0.5s forwards;
+        }
+
+        @keyframes fade-in {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .typewriter {
+            border-right: 0.1em solid var(--accent);
+            white-space: nowrap;
+            overflow: hidden;
+            font-family: monospace;
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            max-width: 100%;
+            margin: 0 auto;
+            letter-spacing: 0.1em;
+            animation: typing 4s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--accent) }
+        }
+
+        .terminal {
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--primary);
+            border-radius: 5px;
+            padding: 1.5rem;
+            margin: 2rem auto;
+            max-width: 600px;
+            position: relative;
+            text-align: left;
+            overflow: hidden;
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        .terminal::before {
+            content: "$ ERROR_TRACE_LOG";
+            display: block;
+            margin-bottom: 1rem;
+            color: var(--error);
+            font-weight: bold;
+        }
+
+        .terminal-text {
+            color: var(--accent);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 0.8rem 1.5rem;
+            margin-top: 1rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+        }
+
+        .btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.4), transparent);
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            box-shadow: 0 0 15px var(--primary);
+            text-shadow: 0 0 5px var(--primary);
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+            gap: 1.5rem;
+        }
+
+        .social-icon {
+            color: var(--light);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 1rem;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+            text-align: center;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .terminal {
+                padding: 1rem;
+            }
+            
+            .terminal-text {
+                font-size: 0.9rem;
+            }
+            
+            .social-icons {
+                margin-top: 1.5rem;
+                gap: 1rem;
+            }
+        }
+
+        /* Hacker animation for the cursor */
+        .hacker-cursor {
+            display: inline-block;
+            width: 0.7em;
+            height: 1em;
+            background: var(--accent);
+            margin-left: 5px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+        
+        /* Scanner effect */
+        .scanner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, 
+                transparent, 
+                var(--primary),
+                var(--secondary),
+                var(--primary), 
+                transparent);
+            z-index: 8;
+            opacity: 0.7;
+            animation: scan 3s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="noise"></div>
+    <div class="grid"></div>
+    <div class="scanner"></div>
+    <canvas class="matrix-rain"></canvas>
+    
+    <div class="container">
+        <div class="glitch-wrapper">
+            <div class="glitch">404</div>
+        </div>
+        
+        <h1 class="message">Zugriff verweigert: System-Fehler</h1>
+        
+        <div class="typewriter">Seite nicht gefunden oder bereits gelöscht</div>
+        
+        <div class="terminal">
+            <div class="terminal-text">
+                > Initiiere Systemdiagnose...<br>
+                > <span class="error-code">FEHLER_CODE: 0x8007F004</span><br>
+                > Pfad nicht gefunden oder Zugriffsrechte unzureichend<br>
+                > Sammle Daten für Fehlerbericht...<br>
+                > Rückverfolgung zur Startseite wird eingeleitet<br>
+                > <span id="countdown">Umleitung in 10 Sekunden</span><span class="hacker-cursor"></span>
+            </div>
+        </div>
+        
+        <a href="/" class="btn">ZURÜCK ZUR STARTSEITE</a>
+        
+        <div class="social-icons">
+            <a href="https://github.com/oliverwebdev" class="social-icon" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                </svg>
+            </a>
+            <a href="#" class="social-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+            </a>
+            <a href="#" class="social-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                </svg>
+            </a>
+        </div>
+    </div>
+    
+    <div class="footer">
+        © 2025 OliverWebDev | Alle Rechte vorbehalten
+    </div>
+
+    <script>
+        // Matrix Rain Effect
+        const canvas = document.querySelector('.matrix-rain');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+        
+        // Generate noise for background
+        const noiseElement = document.querySelector('.noise');
+        noiseElement.style.backgroundImage = generateNoise(100, 100);
+        
+        function generateNoise(width, height) {
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            
+            const ctx = canvas.getContext('2d');
+            const imageData = ctx.createImageData(width, height);
+            const data = imageData.data;
+            
+            for (let i = 0; i < data.length; i += 4) {
+                const value = Math.random() * 255;
+                data[i] = value;
+                data[i + 1] = value;
+                data[i + 2] = value;
+                data[i + 3] = 255;
+            }
+            
+            ctx.putImageData(imageData, 0, 0);
+            return `url(${canvas.toDataURL('image/png')})`;
+        }
+        
+        // Matrix Rain Effect
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$&%#@!*+-=';
+        const drops = [];
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        
+        for (let i = 0; i < columns; i++) {
+            drops[i] = Math.floor(Math.random() * -100);
+        }
+        
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#0f0';
+            ctx.font = `${fontSize}px monospace`;
+            
+            for (let i = 0; i < drops.length; i++) {
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                
+                drops[i]++;
+            }
+            
+            requestAnimationFrame(draw);
+        }
+        
+        draw();
+        
+        // Countdown timer
+        let count = 10;
+        const countdownElement = document.getElementById('countdown');
+        
+        function updateCountdown() {
+            count--;
+            countdownElement.textContent = `Umleitung in ${count} Sekunden`;
+            
+            if (count <= 0) {
+                window.location.href = '/';
+            } else {
+                setTimeout(updateCountdown, 1000);
+            }
+        }
+        
+        setTimeout(updateCountdown, 1000);
+    </script>
+</body>
+</html>
